@@ -54,8 +54,21 @@ Veri seti, iki sınıftan oluşmaktadır:
 - `fare_disi`
 - `kelebek`
 
-Veriler, **train / val / test** olacak şekilde ayrılmıştır ve
-etiketleme işlemi klasör yapısı üzerinden otomatik olarak yapılmaktadır.
+Veri setinde toplam **160 adet görüntü** bulunmaktadır ve
+her sınıf için **80 adet görsel** mevcuttur.
+Veriler, eğitim sürecinin sağlıklı yürütülebilmesi için
+**train / validation / test** olacak şekilde ayrılmıştır.
+
+Her bir sınıf için dağılım aşağıdaki gibidir:
+
+- **Eğitim (train):** 56 görüntü  
+- **Doğrulama (val):** 12 görüntü  
+- **Test:** 12 görüntü  
+
+Bu dağılım sayesinde modelin hem eğitim sırasında öğrenme süreci
+izlenmiş hem de daha önce görmediği test verileri üzerinde
+genelleme performansı değerlendirilmiştir.
+Etiketleme işlemi, klasör yapısı üzerinden otomatik olarak yapılmaktadır.
 
 ```bash
 dataset/
@@ -163,4 +176,65 @@ en yüksek test doğruluğu elde edilmiştir.
 
 Bu çalışma, küçük veri setlerinde **doğru hiperparametre seçiminin,
 model karmaşıklığından daha önemli olabileceğini** göstermektedir. ✅
+
+## 🔍 Model 1, Model 2 ve Model 3 Genel Karşılaştırması
+
+Bu çalışmada aynı veri seti üzerinde üç farklı yaklaşım uygulanmıştır:
+Transfer learning tabanlı hazır bir mimari (Model 1),
+sıfırdan oluşturulmuş bir CNN (Model 2)
+ve hiperparametre optimizasyonu ile geliştirilen bir CNN (Model 3).
+
+Elde edilen sonuçlar, her yaklaşımın avantaj ve sınırlılıklarını
+açık bir şekilde ortaya koymaktadır.
+
+---
+
+### Model 1 – Transfer Learning ve Fine-Tuning (VGG16)
+
+Model 1’de, ImageNet veri seti üzerinde önceden eğitilmiş
+**VGG16 mimarisi** kullanılmıştır.
+Transfer learning yaklaşımı sayesinde model,
+kenar, köşe ve doku gibi temel görsel özellikleri
+önceden öğrenmiş ağırlıklarla kullanmıştır.
+
+Fine-tuning aşamasında VGG16’nın üst katmanlarının
+bir kısmı yeniden eğitilmiş ve bu sayede model,
+veri setine özgü ayrıntılara daha iyi uyum sağlamıştır.
+Bu yaklaşım, sınırlı boyuttaki veri seti üzerinde
+**en yüksek test doğruluğunun (%95)** elde edilmesini sağlamıştır.
+
+Bu sonuç, hazır ve güçlü bir mimarinin,
+doğru şekilde fine-tuning uygulanması durumunda
+küçük veri setlerinde oldukça etkili olabileceğini göstermektedir.
+
+---
+
+### Model 2 – Basit CNN (Baseline Model)
+
+Model 2, tamamen sıfırdan oluşturulmuş bir CNN mimarisi olup
+herhangi bir önceden eğitilmiş ağırlık kullanmamaktadır.
+Bu model, temel bir referans (baseline) performansı sunmuştur.
+
+Ancak veri setinin sınırlı boyutta olması nedeniyle,
+modelin karmaşık örüntüleri genelleme yeteneği
+Model 1 ve Model 3’e kıyasla daha düşük kalmıştır.
+Model 2, sonraki deneyler için karşılaştırma noktası olarak kullanılmıştır.
+
+---
+
+### Model 3 – Geliştirilmiş CNN (Deneysel Optimizasyon)
+
+Model 3’te, Model 2 temel alınarak mimari ve hiperparametreler
+deneysel olarak optimize edilmiştir.
+Kernel size, öğrenme oranı, batch size, dropout oranları
+ve veri artırımı gibi parametreler sistematik biçimde değiştirilmiştir.
+
+Yapılan deneyler sonucunda,
+Model 3’ün test doğruluğu Model 2’ye kıyasla
+belirgin şekilde artırılmıştır.
+Ancak Model 3, güçlü bir transfer learning mimarisi olan
+Model 1’in fine-tuning sonrası elde ettiği
+en yüksek performansın gerisinde kalmıştır.
+
+---
 
