@@ -170,9 +170,8 @@ CNN_Siniflandirma/
 Deneyler sonucunda, model performansını en çok etkileyen faktörlerin
 **learning rate, kernel size, batch size ve dropout dengesi** olduğu görülmüştür.
 
-Transfer learning kullanılan Model 1 güçlü bir başlangıç performansı sunarken,
-Model 3’te yapılan hiperparametre optimizasyonları ile
-en yüksek test doğruluğu elde edilmiştir.
+Transfer learning ve fine-tuning kullanılan Model 1, %95 test doğruluğu ile en yüksek performansı sunmuştur.
+Model 3’te yapılan hiperparametre optimizasyonları ise, sıfırdan eğitilen modeller arasında en iyi sonucu sağlamıştır.
 
 Bu çalışma, küçük veri setlerinde **doğru hiperparametre seçiminin,
 model karmaşıklığından daha önemli olabileceğini** göstermektedir. ✅
